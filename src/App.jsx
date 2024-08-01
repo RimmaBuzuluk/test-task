@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/accessible-emoji */
 import React, { useState } from 'react';
 import './App.scss';
 import { UserTable } from './components/UserTable/UserTable';
@@ -35,6 +34,7 @@ export const App = () => {
   );
   const [selectedFilterUser, setSelectedFilterUser] = useState('');
   const [query, setQuery] = useState('');
+  const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
 
   const filterByQuery = (data, queryItem) => {
     if (!queryItem) {
@@ -53,6 +53,39 @@ export const App = () => {
     query,
   );
 
+  const sortedProducts = [...filteredProducts].sort((a, b) => {
+    if (sortConfig.key === 'productId') {
+      return sortConfig.direction === 'ascending'
+        ? a.productId - b.productId
+        : b.productId - a.productId;
+    }
+
+    if (a[sortConfig.key] < b[sortConfig.key]) {
+      return sortConfig.direction === 'asc' ? -1 : 1;
+    }
+
+    if (a[sortConfig.key] > b[sortConfig.key]) {
+      return sortConfig.direction === 'asc' ? 1 : -1;
+    }
+
+    return 0;
+  });
+
+  const handleSort = key => {
+    let direction = 'asc';
+
+    if (sortConfig.key === key && sortConfig.direction === 'asc') {
+      direction = 'desc';
+    } else if (sortConfig.key === key && sortConfig.direction === 'desc') {
+      direction = '';
+      key = '';
+    }
+
+    setSortConfig({ key, direction });
+  };
+
+  console.log('app', sortConfig);
+
   return (
     <div className="section">
       <div className="container">
@@ -65,16 +98,20 @@ export const App = () => {
             setSelectedFilterUser={setSelectedFilterUser}
             query={query}
             setQuery={setQuery}
-            filteredProducts={filteredProducts}
+            filteredProducts={sortedProducts}
           />
         </div>
 
         <div className="box table-container">
-          {filteredProducts.length === 0 && (
+          {sortedProducts.length === 0 && (
             <p data-cy="NoMatchingMessage">No results</p>
           )}
 
-          <UserTable users={filteredProducts} />
+          <UserTable
+            users={sortedProducts}
+            handleSort={handleSort}
+            sortConfig={sortConfig}
+          />
         </div>
       </div>
     </div>

@@ -6,10 +6,8 @@ export const UserFilterBlock = ({
   setSelectedFilterUser,
   query,
   setQuery,
-  // filteredProducts,
 }) => {
   const userFilter = [{ id: '', name: 'All' }, ...users];
-  // console.log(filteredProducts);
 
   const reset = () => {
     setQuery('');
