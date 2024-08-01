@@ -6,8 +6,15 @@ export const UserFilterBlock = ({
   setSelectedFilterUser,
   query,
   setQuery,
+  // filteredProducts,
 }) => {
   const userFilter = [{ id: '', name: 'All' }, ...users];
+  // console.log(filteredProducts);
+
+  const reset = () => {
+    setQuery('');
+    setSelectedFilterUser('');
+  };
 
   return (
     <nav className="panel">
@@ -51,7 +58,7 @@ export const UserFilterBlock = ({
         </p>
       </div>
 
-      {/* <div className="panel-block is-flex-wrap-wrap">
+      <div className="panel-block is-flex-wrap-wrap">
         <a
           href="#/"
           data-cy="AllCategories"
@@ -81,10 +88,11 @@ export const UserFilterBlock = ({
           data-cy="ResetAllButton"
           href="#/"
           className="button is-link is-outlined is-fullwidth"
+          onClick={reset}
         >
           Reset all filters
         </a>
-      </div> */}
+      </div>
     </nav>
   );
 };

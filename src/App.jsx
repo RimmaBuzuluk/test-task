@@ -65,13 +65,14 @@ export const App = () => {
             setSelectedFilterUser={setSelectedFilterUser}
             query={query}
             setQuery={setQuery}
+            filteredProducts={filteredProducts}
           />
         </div>
 
         <div className="box table-container">
-          <p data-cy="NoMatchingMessage">
-            No products matching selected criteria
-          </p>
+          {filteredProducts.length === 0 && (
+            <p data-cy="NoMatchingMessage">No results</p>
+          )}
 
           <UserTable users={filteredProducts} />
         </div>
