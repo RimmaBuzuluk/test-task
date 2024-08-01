@@ -4,9 +4,9 @@ export const UserFilterBlock = ({
   users,
   selectedFilterUser,
   setSelectedFilterUser,
+  query,
+  setQuery,
 }) => {
-  // console.log(users);
-
   const userFilter = [{ id: '', name: 'All' }, ...users];
 
   return (
@@ -22,42 +22,34 @@ export const UserFilterBlock = ({
             setSelectedFilterUser={setSelectedFilterUser}
           />
         ))}
-        {/* <a data-cy="FilterAllUsers" href="#/">
-          All
-        </a>
-
-        <a data-cy="FilterUser" href="#/">
-          User 1
-        </a>
-
-        <a data-cy="FilterUser" href="#/" className="is-active">
-          User 2
-        </a>
-
-        <a data-cy="FilterUser" href="#/">
-          User 3
-        </a> */}
       </p>
 
-      {/* <div className="panel-block">
+      <div className="panel-block">
         <p className="control has-icons-left has-icons-right">
           <input
             data-cy="SearchField"
             type="text"
             className="input"
             placeholder="Search"
-            value="qwe"
+            value={query}
+            onChange={e => setQuery(e.target.value)}
           />
 
           <span className="icon is-left">
             <i className="fas fa-search" aria-hidden="true" />
           </span>
-
-          <span className="icon is-right">
-            <button data-cy="ClearButton" type="button" className="delete" />
-          </span>
+          {query !== '' && (
+            <span className="icon is-right">
+              <button
+                data-cy="ClearButton"
+                type="button"
+                className="delete"
+                onClick={() => setQuery('')}
+              />
+            </span>
+          )}
         </p>
-      </div> */}
+      </div>
 
       {/* <div className="panel-block is-flex-wrap-wrap">
         <a

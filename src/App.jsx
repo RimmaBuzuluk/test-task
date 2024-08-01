@@ -34,10 +34,24 @@ export const App = () => {
     productsFromServer,
   );
   const [selectedFilterUser, setSelectedFilterUser] = useState('');
+  const [query, setQuery] = useState('');
 
-  const filteredProducts = selectedFilterUser
-    ? userInformation.filter(product => product.userId === selectedFilterUser)
-    : userInformation;
+  const filterByQuery = (data, queryItem) => {
+    if (!queryItem) {
+      return data;
+    }
+
+    return data.filter(item =>
+      item.productName.toLowerCase().includes(queryItem.toLowerCase()),
+    );
+  };
+
+  const filteredProducts = filterByQuery(
+    selectedFilterUser
+      ? userInformation.filter(product => product.userId === selectedFilterUser)
+      : userInformation,
+    query,
+  );
 
   return (
     <div className="section">
@@ -49,6 +63,8 @@ export const App = () => {
             users={usersFromServer}
             selectedFilterUser={selectedFilterUser}
             setSelectedFilterUser={setSelectedFilterUser}
+            query={query}
+            setQuery={setQuery}
           />
         </div>
 
